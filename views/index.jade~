@@ -1,0 +1,92 @@
+doctype 5
+html(lang="en")
+  head
+    title= title
+    meta(charset="utf-8")
+    link(rel="stylesheet", type='text/css', href='/css/imgareaselect-animated.css')
+    script(type='text/javascript', src='js/jquery.min.js')
+    script(type='text/javascript', src='js/jquery.imgareaselect.pack.js')
+  body
+    h1 Hello Jerry!
+    if user
+      div
+        p: span 欢迎回来, #{user.username}
+        p: span 你的ID是#{user._id}
+        p
+          span 当前头像是
+          span: img(src="#{user.avatars[0]}")    
+      div 
+	form(method="post", enctype="multipart/form-data", action="/file-upload")
+	  p input(type="file", name="voice")
+          p input(type="submit")
+    hr
+    if !user
+      div
+        form(action="/register", method="post")
+          p
+            span Email:
+            input(type="email", name="email")
+          p
+            span Username:
+            input(type="text", name="username")
+          p
+            span Password:
+            input(type="password", name="password")
+          p
+            span Confirm:
+            input(type="password", name="confirm")
+          p
+            input(type='submit', value="Register")
+      hr
+      div
+        form(action="/login", method="post")
+          p
+            span Email:
+            input(type="email", name="email")
+          p
+            span Password:
+            input(type="password", name="password")
+          p
+            input(type='submit', value="Login")
+    else
+      div
+        p(style="display:none;font-weight:bold;")#message
+        form(action="/upload_avatar", method="post", id="avatar_form", enctype="multipart/form-data")
+          p
+            span 修改头像
+            input(type="file", name="avatar" id="upload_button")
+          p
+            input(type="submit", value="Upload", id="avatar_submit")
+        div
+          img(style="display:none")#avatar(src="")
+        script(type='text/javascript', src='js/avatarUpload.js')
+      hr
+      div
+        form(action="/update_profile", method="post")
+          p
+            span 用户名：
+            input(type="text", name="username", value="#{user.username}")
+          p
+            genderType = {'U': '不确定', 'M':'男', 'F': '女'}
+            span 性别：
+            select(name="gender")
+              each text, value in genderType
+                if user.gender == value
+                  option(value="#{value}", selected="selected") #{text}
+                else
+                  option(value="#{value}") #{text}
+          p
+            span 个性签名：
+            input(type="text", name="signature", value="#{user.signatures[0] || '暂无'}")
+          p
+            input(type="submit", value="Update")
+      hr
+      div
+        form(action="/logout", method='post')
+          input(type="submit", value="logout")
+    if successMessage
+      p(style="color:green")
+        =successMessage
+    if errorMessage
+      p(style="color:red")
+        =errorMessage
