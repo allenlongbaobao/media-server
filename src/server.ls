@@ -1,5 +1,5 @@
-require! ['./config', express, path, './verify-handler', './views-handler', './login-handler', './register-handler', './logout-handler', './avatar-upload-handler', './update-profile-handler', './file-upload-handler', './file-download-handler']
-
+require! ['./config', express, path, './verify-handler', './views-handler', './login-handler', './register-handler', './logout-handler',
+          './avatar-upload-handler', './update-profile-handler', './file-upload-handler', './file-download-handler', './retrieve-audio-handler']
 
 server = express!
 
@@ -22,6 +22,7 @@ register-handlers-to-server = !->
   server.get '/file-download', file-download-handler
 
   server.post '*', verify-handler # 过滤器
+  server.get '/audio/*', retrieve-audio-handler
 
   server.post '/login', login-handler
   server.post '/register', register-handler
