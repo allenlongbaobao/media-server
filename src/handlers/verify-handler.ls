@@ -87,15 +87,7 @@ update-profile-schema =
       type: 'string'
       required: true
 
-file-download-schema =
-  type: 'object'
-  additional-properties: false
-  properties:
-    audio-path:
-      type: 'string'
-      required: true
-
-file-upload-schema =
+audio-upload-schema =
   type: 'object'
   additional-properties: false
   properties:
@@ -108,8 +100,7 @@ schemas =
   'login': login-schema
   'upload_avatar': upload-avatar-schema
   'update_profile': update-profile-schema
-  'file-download': file-download-schema
-  'file-upload': file-upload-schema
+  'upload_audio': audio-upload-schema
 
 get-schema-with-request-param = (request-param)->
   schemas[request-param] or default-schema
